@@ -1,12 +1,13 @@
 import Message from "./Message";
+import Loading from "./Loading";
 import React from "react";
 import { countryList } from "./countryList";
 import { getData } from "./MakeRequest";
 
 function Chat() {
     const [messages, setMessages] = React.useState([]);
-
     const [inputText, setInputText] = React.useState("");
+    const [loading, setLoading] = React.useState(false);
 
     function submitQuestion(e) {
         e.preventDefault();
@@ -22,29 +23,36 @@ function Chat() {
     }
 
     async function processAnswer(input) {
+        setLoading(true);
         let botResponse = "Sorry, I don't understand.";
         const lower = input.toLowerCase();
-
-        // Intersect words in input string with country list
         const words = lower.split(" ");
+
+        // Intersect input string with country list
 
         const filteredArray = countryList.filter(
             (value) =>
-                words.includes(value.toLowerCase()) ||
-                words.includes(value.toLowerCase() + "?")
+                lower.includes(value.toLowerCase()) ||
+                lower.includes(value.toLowerCase() + "?")
         );
 
         // If there's a valid country name, proceed with bot logic
         if (filteredArray.length > 0) {
             let country = filteredArray[0];
+            console.log(country);
             const countryInfo = await getData(country);
+
+            // Capital
             if (words.includes("capital")) {
                 botResponse = `The capital of ${country} is ${countryInfo[0].capital}.`;
-            } else if (words.includes("currency")) {
+            }
+            // Currency
+            else if (words.includes("currency")) {
                 const currency = Object.entries(countryInfo[0].currencies);
-                console.log(currency[0]);
                 botResponse = `In ${country}, the primary currency is ${currency[0][1].name} (${currency[0][0]}).`;
-            } else if (
+            }
+            // Population
+            else if (
                 words.includes("population") ||
                 (words.includes("how") &&
                     words.includes("many") &&
@@ -53,28 +61,39 @@ function Chat() {
                 botResponse = `The population of ${country} is ${countryInfo[0].population}.`;
             }
         }
-        if (
+        // Thank you
+        if (lower.includes("thanks") || lower.includes("thank you")) {
+            botResponse = `No problem!`;
+        }
+        // Who are you
+        else if (
             (lower.includes("what") && lower.includes("name")) ||
             (lower.includes("who") && lower.includes("you"))
         ) {
             botResponse = `I am GeoBot. Pleased to meet you!`;
         }
-        if (
+        // Hello
+        else if (
             lower.includes("hello") ||
             lower.includes("hi") ||
             lower.includes("hey")
         ) {
-            // If no country, check for greeting phrases and respond
             botResponse = `Hi there! Do you have a question for me?`;
         }
 
         const newObj = { bot: true, msg: botResponse };
+
+        // Fake some reply time
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+
+        setLoading(false);
         setMessages((prevState) => [newObj, ...prevState]);
     }
 
     return (
         <div className="Chat">
             <div className="Chat-messages" id="Chat-messages">
+                {loading && <Loading />}
                 {messages &&
                     messages.map((m) => {
                         return <Message bot={m.bot} msg={m.msg} />;
