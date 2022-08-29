@@ -1,5 +1,5 @@
 .App {
-    background-color: lightcoral;
+    background-color: #666666;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -10,19 +10,34 @@
     align-self: center;
     display: flex;
     flex-direction: column;
-    background-color: lightseagreen;
-    height: 60vh;
-    width: 60vw;
+    background-color: rgb(36, 90, 87);
+    height: 75vh;
+    width: 75vw;
+    border: 2px solid black;
+    border-radius: 5px;
+    max-width: 800px;
+}
+
+.Chat-messages {
+    display: flex;
+    flex-direction: column-reverse;
     overflow-y: auto;
 }
 
 .Chat-input-div {
-    background-color: red;
+    background-color: rgb(97, 174, 175);
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: stretch;
     margin-top: auto;
+    border-top: 2px solid black;
+}
+
+.Chat-input-form {
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 .Chat-input-text {
@@ -31,17 +46,30 @@
     padding: 5px;
     border-radius: 5px;
     font-size: 18px;
+    border: 1px solid black;
 }
 
 .Chat-input-submit {
     width: 30px;
     height: 30px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: darkgray;
 }
 
-.Message {
+.Message-left {
     background-color: beige;
     margin: 10px;
     padding: 5px;
     border-radius: 10px;
     width: 80%;
+}
+
+.Message-right {
+    background-color: aliceblue;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 10px;
+    width: 80%;
+    margin-left: auto;
 }

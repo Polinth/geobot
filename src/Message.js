@@ -1,5 +1,9 @@
-function Message() {
-    return <div className="Message">Hi there, first message</div>;
+function Message(props) {
+    return (
+        <div className={props.bot ? "Message-right" : "Message-left"}>
+            {props.msg}
+        </div>
+    );
 }
 
 export default Message;
