@@ -22,6 +22,7 @@
     display: flex;
     flex-direction: column-reverse;
     overflow-y: auto;
+    padding-bottom: 20px;
 }
 
 .Chat-input-div {
@@ -29,7 +30,6 @@
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: stretch;
     margin-top: auto;
     border-top: 2px solid black;
 }
@@ -38,6 +38,7 @@
     display: flex;
     align-items: center;
     width: 100%;
+    justify-content: space-between;
 }
 
 .Chat-input-text {
@@ -50,11 +51,12 @@
 }
 
 .Chat-input-submit {
-    width: 30px;
+    width: 10%;
     height: 30px;
     border: 1px solid black;
     border-radius: 5px;
     background-color: darkgray;
+    margin-right: 20px;
 }
 
 .Message-left {
@@ -63,15 +65,18 @@
     padding: 5px;
     border-radius: 10px;
     width: 70%;
+    box-shadow: 3px 3px 3px 3px;
 }
 
 .Message-right {
-    background-color: aliceblue;
+    /*background-color: aliceblue;*/
+    background-color: powderblue;
     margin: 10px;
     padding: 5px;
     border-radius: 10px;
     width: 70%;
     margin-left: auto;
+    box-shadow: 3px 3px 3px 3px;
 }
 
 .Loading {
@@ -81,6 +86,7 @@
     border-radius: 10px;
     width: auto;
     margin-left: auto;
+    box-shadow: 3px 3px 3px 3px;
 }
 
 .Loading-text {

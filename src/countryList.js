@@ -1,3 +1,5 @@
+export const regionList = ["Europe", "Africa", "Americas", "Asia", "Oceania"];
+
 export const countryList = [
     "South Africa",
     "DR Congo",
@@ -185,7 +187,6 @@ export const countryList = [
     "Hungary",
     "Montenegro",
     "United Kingdom",
-    "England",
     //"Scotland",
     //"Wales",
     //"Northern Ireland",
