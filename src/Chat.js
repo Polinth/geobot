@@ -106,7 +106,7 @@ function Chat() {
         }
 
         // Thank you
-        if (lower.includes("thanks") || lower.includes("thank you")) {
+        else if (lower.includes("thanks") || lower.includes("thank you")) {
             botResponse = `No problem!`;
         }
         // Who are you
@@ -125,7 +125,10 @@ function Chat() {
             botResponse = `Hi there! Do you have a question for me?`;
         }
 
-        // TODO: Help response
+        // Help response
+        else if (lower.includes("help")) {
+            botResponse = `Try asking me something about a country. For example "What is the capital of Australia?"`;
+        }
 
         const newObj = { bot: true, msg: botResponse };
 
