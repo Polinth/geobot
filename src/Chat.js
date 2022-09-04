@@ -9,6 +9,8 @@ function Chat() {
     const [inputText, setInputText] = React.useState("");
     const [loading, setLoading] = React.useState(false);
 
+    const numList = ["2", "3", "4", "5", "two", "three", "four", "five"];
+
     function submitQuestion(e) {
         e.preventDefault();
 
@@ -20,6 +22,14 @@ function Chat() {
         setMessages((prevState) => [newObj, ...prevState]);
         processAnswer(inputText);
         setInputText("");
+    }
+
+    function spaceInNum(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
+
+    function clearAll() {
+        setMessages([]);
     }
 
     async function processAnswer(input) {
@@ -35,8 +45,8 @@ function Chat() {
         // Intersect input string with country list
         const checkForCountry = countryList.filter(
             (value) =>
-                lower.includes(value.toLowerCase()) ||
-                lower.includes(value.toLowerCase() + "?")
+                words.includes(value.toLowerCase()) ||
+                words.includes(value.toLowerCase() + "?")
         );
 
         // If there's a valid country name, fetch data for it
@@ -55,8 +65,8 @@ function Chat() {
         // Check for valid region name the same way
         const checkForRegion = regionList.filter(
             (value) =>
-                lower.includes(value.toLowerCase()) ||
-                lower.includes(value.toLowerCase() + "?")
+                words.includes(value.toLowerCase()) ||
+                words.includes(value.toLowerCase() + "?")
         );
         // If there's a valid region name, fetch data for it
         if (checkForRegion.length > 0) {
@@ -69,10 +79,65 @@ function Chat() {
             }
         }
 
-        // TODO: Region questions - "biggest country in europe", "how many people live in asia", etc
+        // Population of region X
+        if (
+            region &&
+            (words.includes("population") ||
+                (words.includes("how") &&
+                    words.includes("many") &&
+                    words.includes("people")))
+        ) {
+            let regionPop = 0;
+            regionInfo.forEach((c) => (regionPop += c.population));
+            regionPop = spaceInNum(regionPop);
+            botResponse = `The total population of ${region} is ${regionPop}.`;
+        }
+
+        // Largest country/countries in region X
+        else if (
+            region &&
+            (words.includes("largest") || words.includes("biggest"))
+        ) {
+            // Check if there is a numeric value included, like "five" or "3"
+            const checkForNumValue = numList.filter((value) =>
+                words.includes(value)
+            );
+            let num = 1;
+            if (checkForNumValue.length === 1) {
+                // Numeric value found, execute switch statement to find what to ask API for
+                // TODO: refactor this switch?
+                switch (checkForNumValue[0]) {
+                    case "two":
+                        num = 2;
+                        break;
+                    case "three":
+                        num = 3;
+                        break;
+                    case "four":
+                        num = 4;
+                        break;
+                    case "five":
+                        num = 5;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            regionInfo.sort((a, b) => parseInt(b.area) - parseInt(a.area));
+            const regionInfoSlice = regionInfo.slice(0, num);
+
+            botResponse = regionInfoSlice.map((c) => (
+                <p>
+                    {c.name.common} ({spaceInNum(c.area)} km2)
+                </p>
+            ));
+            console.log(botResponse);
+        }
 
         // Capital of country X
-        if (country && words.includes("capital")) {
+        else if (country && words.includes("capital")) {
             botResponse = `The capital of ${country} is ${countryInfo[0].capital}.`;
         }
         // Currency of country X
@@ -88,7 +153,8 @@ function Chat() {
                     words.includes("many") &&
                     words.includes("people")))
         ) {
-            botResponse = `The population of ${country} is ${countryInfo[0].population}.`;
+            const pop = spaceInNum(countryInfo[0].population);
+            botResponse = `The population of ${country} is ${pop}.`;
         }
 
         // Flag of country
@@ -126,7 +192,7 @@ function Chat() {
         }
 
         // Help response
-        else if (lower.includes("help")) {
+        else if (lower.includes("help") || lower.includes("example")) {
             botResponse = `Try asking me something about a country. For example "What is the capital of Australia?"`;
         }
 
@@ -167,5 +233,14 @@ function Chat() {
         </div>
     );
 }
+
+/*
+<select name="dropdown">
+                    <option selected>...</option>
+                    <option onClick={clearAll} value="clear">
+                        Clear all
+                    </option>
+                </select>
+*/
 
 export default Chat;
