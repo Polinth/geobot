@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/geobot/static/css/main.c9ec32c4.css",
-    "main.js": "/geobot/static/js/main.e641d2cd.js",
+    "main.css": "/geobot/static/css/main.df67c175.css",
+    "main.js": "/geobot/static/js/main.6e72392c.js",
     "static/js/787.c4e7f8f9.chunk.js": "/geobot/static/js/787.c4e7f8f9.chunk.js",
     "index.html": "/geobot/index.html",
-    "main.c9ec32c4.css.map": "/geobot/static/css/main.c9ec32c4.css.map",
-    "main.e641d2cd.js.map": "/geobot/static/js/main.e641d2cd.js.map",
+    "main.df67c175.css.map": "/geobot/static/css/main.df67c175.css.map",
+    "main.6e72392c.js.map": "/geobot/static/js/main.6e72392c.js.map",
     "787.c4e7f8f9.chunk.js.map": "/geobot/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c9ec32c4.css",
-    "static/js/main.e641d2cd.js"
+    "static/css/main.df67c175.css",
+    "static/js/main.6e72392c.js"
   ]
 }
