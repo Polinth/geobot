@@ -105,18 +105,21 @@ function Chat() {
             let num = 1;
             if (checkForNumValue.length === 1) {
                 // Numeric value found, execute switch statement to find what to ask API for
-                // TODO: refactor this switch?
                 switch (checkForNumValue[0]) {
                     case "two":
+                    case "2":
                         num = 2;
                         break;
                     case "three":
+                    case "3":
                         num = 3;
                         break;
                     case "four":
+                    case "4":
                         num = 4;
                         break;
                     case "five":
+                    case "5":
                         num = 5;
                         break;
 
