@@ -9,6 +9,7 @@ function Chat() {
     const [inputText, setInputText] = React.useState("");
     const [loading, setLoading] = React.useState(false);
 
+    // Valid numerical query input
     const numList = ["2", "3", "4", "5", "two", "three", "four", "five"];
 
     function submitQuestion(e) {
@@ -24,16 +25,19 @@ function Chat() {
         setInputText("");
     }
 
+    // Regex to turn 2500000 into 2 500 000
     function spaceInNum(num) {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     }
 
+    // Clear all messages from chat
     function clearAll() {
         setMessages([]);
     }
 
     async function processAnswer(input) {
         setLoading(true);
+        // Set default response
         let botResponse = "Sorry, I don't understand.";
         let country;
         let countryInfo;
@@ -45,13 +49,20 @@ function Chat() {
         // Intersect input string with country list
         const checkForCountry = countryList.filter(
             (value) =>
-                words.includes(value.toLowerCase()) ||
-                words.includes(value.toLowerCase() + "?")
+                lower.includes(value.toLowerCase()) ||
+                lower.includes(value.toLowerCase() + "?")
         );
 
         // If there's a valid country name, fetch data for it
         if (checkForCountry.length > 0) {
-            country = checkForCountry[0];
+            // If multiple matches, choose longest string
+            if (checkForCountry.length > 1) {
+                country = checkForCountry.reduce((a, b) =>
+                    a.length > b.length ? a : b
+                );
+            } else {
+                country = checkForCountry[0];
+            }
             try {
                 countryInfo = await getDataExactMatch(country);
                 if (countryInfo[0] === undefined) {
